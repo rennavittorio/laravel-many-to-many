@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request; //serve per aggiungere la request all'index, per ricevere paramas
 use Illuminate\Support\Str;
@@ -55,7 +56,9 @@ class ProjectController extends Controller
 
         $project_types = Type::all();
 
-        return view('projects.create', compact('project_categories', 'client_categories', 'project_types'));
+        $technologies = Technology::all();
+
+        return view('projects.create', compact('project_categories', 'client_categories', 'project_types', 'technologies'));
     }
 
     /**
@@ -69,11 +72,18 @@ class ProjectController extends Controller
 
         $data = $request->validated(); //richiama la form request validation
 
+        // dd($data);
+
         $new_proj = new Project();
         $new_proj->fill($data);
         $new_proj->slug = Str::of($data['title'])->slug();
 
         $new_proj->save();
+
+        if (isset($data['tech'])) { //se l'array tags è presente (non null)
+            $new_proj->technologies()->attach($data['tech']); //attacchiamo l'array di tag al post
+            //in fase di update useremo il metodo sync
+        }
 
         return to_route('projects.show', $new_proj->slug);
     }

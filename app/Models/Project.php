@@ -21,7 +21,8 @@ class Project extends Model
         'proj_category',
         'client',
         'client_category',
-        'type_id'
+        'type_id',
+        'tech'
     ];
 
     public function type()

@@ -44,7 +44,8 @@ class StoreProjectRequest extends FormRequest
                 Rule::in([
                     'food-and-beverage', 'fashion', 'tech'
                 ])
-            ]
+            ],
+            'tech' => 'nullable|exists:technologies,id'
         ];
     }
 }

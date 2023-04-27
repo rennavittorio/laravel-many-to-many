@@ -39,7 +39,7 @@
             aria-label="Default select example" id="type_id" name="type_id" value="">
                 <option>Open this select menu</option>
                 @foreach($project_types as $key=>$type)
-                    <option @selected(old('type_id') == $key) value="{{ $type->id }}"> {{ $type->type }} </option>
+                    <option @selected(old('type_id') == $type->id) value="{{ $type->id }}"> {{ $type->type }} </option>
                 @endforeach
             </select>
             @error('type_id')
@@ -54,6 +54,27 @@
         @error('description')
             <div class="text-danger">{{ $message }}</div>
         @enderror
+
+        {{-- checkbox --}}
+
+        <div class="col-12 d-flex gap-5">
+            @foreach ($technologies as $tech)
+
+                <div class="form-check">
+                    <input 
+                    class="form-check-input" type="checkbox" value="{{ $tech->id }}" id="{{ $tech->id }}" name="tech[]"
+                    @checked( in_array($tech->id, old('tech', [])) )
+                    >
+                    <label class="form-check-label" for="{{ $tech->id }}" name="tech[]">
+                        {{ $tech->technology }}
+                    </label>
+                </div>
+                
+            @endforeach
+
+        </div>
+
+        {{-- checkbox --}}
 
         <div class="col-md-6">
             <label for="website_link" class="form-label">website_link</label>

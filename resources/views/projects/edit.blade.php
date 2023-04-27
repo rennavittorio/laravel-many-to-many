@@ -25,7 +25,7 @@
             aria-label="Default select example" id="proj_category" name="proj_category" value="">
                 <option>Open this select menu</option>
                 @foreach($project_categories as $key=>$cat)
-                    <option @selected(old('proj_category') == $key) value="{{ $key }}"> {{ $cat }} </option>
+                    <option @selected(old('proj_category', $project->proj_category) == $cat) value="{{ $cat }}"> {{ $cat }} </option>
                 @endforeach
             </select>
             @error('proj_categories')
@@ -39,7 +39,7 @@
             aria-label="Default select example" id="type_id" name="type_id" value="">
                 <option>Open this select menu</option>
                 @foreach($project_types as $key=>$type)
-                    <option @selected(old('type_id') == $key) value="{{ $type->id }}"> {{ $type->type }} </option>
+                    <option @selected(old('type_id', $project->type_id) == $type->id) value="{{ $type->id }}"> {{ $type->type }} </option>
                 @endforeach
             </select>
             @error('type_id')
@@ -54,6 +54,24 @@
         @error('description')
             <div class="text-danger">{{ $message }}</div>
         @enderror
+
+        {{-- checkbox --}}
+
+        <div class="col-12">
+            @foreach ($technologies as $tech)
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="{{ $tech->id }}" name="tech[]">
+                    <label class="form-check-label" for="{{ $tech->id }}" name="tech[]">
+                        {{ $tech->technology }}
+                    </label>
+                </div>
+                
+            @endforeach
+
+        </div>
+
+        {{-- checkbox --}}
 
         <div class="col-md-6">
             <label for="website_link" class="form-label">website_link</label>
@@ -85,7 +103,7 @@
             aria-label="Default select example" id="client_category" name="client_category" value="">
                 <option>Open this select menu</option>
                 @foreach($client_categories as $key=>$cat)
-                    <option @selected(old('client_category') == $key) value="{{ $key }}"> {{ $cat }} </option>
+                    <option @selected(old('client_category', $project->client_category) == $cat) value="{{ $cat }}"> {{ $cat }} </option>
                 @endforeach
             </select>
             @error('client_category')
