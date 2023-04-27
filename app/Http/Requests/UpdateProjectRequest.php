@@ -50,7 +50,8 @@ class UpdateProjectRequest extends FormRequest
                 Rule::in([
                     'food-and-beverage', 'fashion', 'tech'
                 ])
-            ]
+            ],
+            'techs' => 'exists:technologies,id'
         ];
     }
 }

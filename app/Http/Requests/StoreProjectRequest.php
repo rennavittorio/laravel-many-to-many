@@ -45,7 +45,9 @@ class StoreProjectRequest extends FormRequest
                     'food-and-beverage', 'fashion', 'tech'
                 ])
             ],
-            'tech' => 'nullable|exists:technologies,id'
+            'techs' => 'exists:technologies,id'
+            //exists vale solo per i dati singoli
+            //ATTENZIONE: il check dell'array che arriva viene fatto sugli elementi, quindi non può avere il 'nullable'
         ];
     }
 }

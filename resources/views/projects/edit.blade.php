@@ -57,12 +57,15 @@
 
         {{-- checkbox --}}
 
-        <div class="col-12">
+        <div class="col-12 d-flex gap-5">
             @foreach ($technologies as $tech)
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="{{ $tech->id }}" name="tech[]">
-                    <label class="form-check-label" for="{{ $tech->id }}" name="tech[]">
+                    <input 
+                    class="form-check-input" type="checkbox" value="{{ $tech->id }}" id="{{ $tech->id }}" name="techs[]"
+                    @checked( in_array($tech->id, old('techs', $project->technologies()->pluck('id')->all())) )
+                    >
+                    <label class="form-check-label" for="{{ $tech->id }}" name="techs[]">
                         {{ $tech->technology }}
                     </label>
                 </div>

@@ -80,8 +80,8 @@ class ProjectController extends Controller
 
         $new_proj->save();
 
-        if (isset($data['tech'])) { //se l'array tags è presente (non null)
-            $new_proj->technologies()->attach($data['tech']); //attacchiamo l'array di tag al post
+        if (isset($data['techs'])) { //se l'array tags è presente (non null)
+            $new_proj->technologies()->attach($data['techs']); //attacchiamo l'array di tag al post
             //in fase di update useremo il metodo sync
         }
 
@@ -122,7 +122,9 @@ class ProjectController extends Controller
 
         $project_types = Type::all();
 
-        return view('projects.edit', compact('project', 'project_categories', 'client_categories', 'project_types'));
+        $technologies = Technology::all();
+
+        return view('projects.edit', compact('project', 'project_categories', 'client_categories', 'project_types', 'technologies'));
     }
 
     /**
@@ -137,6 +139,8 @@ class ProjectController extends Controller
         $data = $request->validated();
 
         $project->update($data);
+
+        $project->technologies()->sync($data['techs']);
 
         return to_route('projects.show', $project->slug);
     }

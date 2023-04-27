@@ -62,10 +62,10 @@
 
                 <div class="form-check">
                     <input 
-                    class="form-check-input" type="checkbox" value="{{ $tech->id }}" id="{{ $tech->id }}" name="tech[]"
-                    @checked( in_array($tech->id, old('tech', [])) )
+                    class="form-check-input" type="checkbox" value="{{ $tech->id }}" id="{{ $tech->id }}" name="techs[]"
+                    @checked( in_array($tech->id, old('techs', [])) )
                     >
-                    <label class="form-check-label" for="{{ $tech->id }}" name="tech[]">
+                    <label class="form-check-label" for="{{ $tech->id }}" name="techs[]">
                         {{ $tech->technology }}
                     </label>
                 </div>
