@@ -40,9 +40,9 @@
                 <th scope="col">id</th>
                 <th scope="col">title</th>
                 <th scope="col">proj type</th>
+                <th scope="col">tech</th>
                 <th scope="col">client</th>
                 <th scope="col">created</th>
-                <th scope="col">deleted</th>
                 <th scope="col">actions</th>
             </tr>
         </thead>
@@ -55,13 +55,23 @@
                 <td>{{ $project->id }}</td>
                 <td><a href="{{ route('projects.show', $project) }}">{{ $project->title }}</a></td>
                 <td>{{ $project->type ? $project->type->type : '-'  }}</td>
+                <td>
+                    <ul class="d-flex gap-1">
+                        @forelse ($project->technologies()->orderBy('technology', 'asc')->get() as $tech)
+                            <li class="badge text-bg-info">
+                                {{ $tech->technology }}
+                            </li>
+                        @empty
+                            -
+                        @endforelse
+                    </ul>
+                </td>
                 <td>{{ $project->client }}</td>
                 <td>{{ $project->created_at->format('Y-m-d') }}</td>
-                <td>{{ $project->trashed() ? $project->deleted_at->format('Y-m-d') : '' }}</td>
                 <td>
                     <div class="actions-wrapper d-flex gap-3">
-                        <a href="{{ route('projects.edit', $project->slug) }}" class="btn btn-sm btn-warning"><></a>
-                        <a href="{{ route('projects.delete', $project->id) }}" class="btn btn-sm btn-danger">x</a>
+                        <a href="{{ route('projects.edit', $project->slug) }}" class="btn btn-sm btn-warning">&Theta;</a>
+                        <a href="{{ route('projects.delete', $project->id) }}" class="btn btn-sm btn-danger">&cross;</a>
                         @if($project->trashed())
                         <form 
                             action="{{ route('projects.restore', $project) }}" method="POST"
